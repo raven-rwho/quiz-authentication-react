@@ -13,6 +13,7 @@ const config = {
 
 class Firebase {
   constructor() {
+    console.log("apiKey: " + config.apiKey)
     app.initializeApp(config);
 
     /* Helper */
