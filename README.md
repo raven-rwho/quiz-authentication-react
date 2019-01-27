@@ -19,7 +19,7 @@
 * uses:
   * only React (create-react-app)
   * **firestore**
-  * react-router
+  * react-router-blubs
 * features:
   * Sign In
   * Sign Up
