@@ -13,7 +13,7 @@ const QuestionListPage = () => (
       <p>This is the list of questions.</p>
   
       <Switch>
-        <Route exact path={ROUTES.ADMIN_DETAILS} component={QuestionItem} />
+        <Route exact path={ROUTES.QUESTION_DETAILS} component={QuestionItem} />
         <Route exact path={ROUTES.QUESTION_LIST} component={QuestionList} />
       </Switch>
     </div>

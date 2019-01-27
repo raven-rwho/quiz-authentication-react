@@ -13,7 +13,7 @@ const config = {
 
 class Firebase {
   constructor() {
-    console.log("apiKey: " + config.apiKey)
+    console.log('apiKey: ' + config.apiKey);
     app.initializeApp(config);
 
     /* Helper */
@@ -105,6 +105,12 @@ class Firebase {
   message = uid => this.db.doc(`messages/${uid}`);
 
   messages = () => this.db.collection('messages');
+
+  // *** Questions API ***
+
+  question = uid => this.db.doc(`questions/${uid}`);
+
+  questions = () => this.db.collection('questions');
 }
 
 export default Firebase;

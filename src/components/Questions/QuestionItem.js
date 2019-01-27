@@ -7,23 +7,23 @@ class QuestionItem extends Component {
 
     this.state = {
       loading: false,
-      user: null,
+      question: null,
       ...props.location.state,
     };
   }
 
   componentDidMount() {
-    if (this.state.user) {
+    if (this.state.question) {
       return;
     }
 
     this.setState({ loading: true });
 
     this.unsubscribe = this.props.firebase
-      .user(this.props.match.params.id)
+      .question(this.props.match.params.id)
       .onSnapshot(snapshot => {
         this.setState({
-          user: snapshot.data(),
+          question: snapshot.data(),
           loading: false,
         });
       });
@@ -34,34 +34,43 @@ class QuestionItem extends Component {
   }
 
   onSendPasswordResetEmail = () => {
-    this.props.firebase.doPasswordReset(this.state.user.email);
+    //this.props.firebase.doPasswordReset(this.state.user.email);
   };
 
   render() {
-    const { user, loading } = this.state;
+    const { question, loading } = this.state;
 
     return (
       <div>
-        <h2>User ({this.props.match.params.id})</h2>
+        <h2>Question ({this.props.match.params.id})</h2>
         {loading && <div>Loading ...</div>}
 
-        {user && (
+        {question && (
           <div>
             <span>
-              <strong> ID: </strong> {user.uid}
+              <strong>ID: </strong> {question.uid}
             </span>
             <span>
-              <strong> E-Mail: </strong> {user.email}
+              <strong> Question: </strong> {question.questions}
             </span>
             <span>
-              <strong> Username: </strong> {user.username}
+              <strong> Choices: </strong> {question.choices}
+            </span>
+            <span>
+              <strong> Answer: </strong> {question.correctAnswers}
+            </span>
+            <span>
+              <strong> Difficulty: </strong> {question.difficulty}
+            </span>
+            <span>
+              <strong> Image: </strong> {question.images}
             </span>
             <span>
               <button
                 type="button"
                 onClick={this.onSendPasswordResetEmail}
               >
-                Send Password Reset
+                Edit Question
               </button>
             </span>
           </div>

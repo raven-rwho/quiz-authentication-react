@@ -10,7 +10,7 @@ class QuestionList extends Component {
 
     this.state = {
       loading: false,
-      users: [],
+      questions: [],
     };
   }
 
@@ -18,16 +18,16 @@ class QuestionList extends Component {
     this.setState({ loading: true });
 
     this.unsubscribe = this.props.firebase
-      .users()
+      .questions()
       .onSnapshot(snapshot => {
-        let users = [];
+        let questions = [];
 
         snapshot.forEach(doc =>
-          users.push({ ...doc.data(), uid: doc.id }),
+          questions.push({ ...doc.data(), uid: doc.id }),
         );
 
         this.setState({
-          users,
+          questions,
           loading: false,
         });
       });
@@ -38,29 +38,39 @@ class QuestionList extends Component {
   }
 
   render() {
-    const { users, loading } = this.state;
+    const { questions, loading } = this.state;
 
     return (
       <div>
         <h2>Users</h2>
         {loading && <div>Loading ...</div>}
         <ul>
-          {users.map(user => (
-            <li key={user.uid}>
+          {questions.map(question => (
+            <li key={question.uid}>
               <span>
-                <strong>ID: </strong> {user.uid}
+                <strong>ID: </strong> {question.uid}
               </span>
               <span>
-                <strong> E-Mail: </strong> {user.email}
+                <strong> Question: </strong> {question.questions}
               </span>
               <span>
-                <strong> Username: </strong> {user.username}
+                <strong> Choices: </strong> {question.choices}
               </span>
+              <span>
+                <strong> Answer: </strong> {question.correctAnswers}
+              </span>
+              <span>
+                <strong> Difficulty: </strong> {question.difficulty}
+              </span>
+              <span>
+                <strong> Image: </strong> {question.images}
+              </span>
+              
               <span>
                 <Link
                   to={{
-                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                    state: { user },
+                    pathname: `${ROUTES.QUESTION_LIST}/${question.uid}`,
+                    state: { question },
                   }}
                 >
                 Edit
