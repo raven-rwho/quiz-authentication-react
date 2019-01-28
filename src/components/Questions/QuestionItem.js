@@ -37,6 +37,14 @@ class QuestionItem extends Component {
     //this.props.firebase.doPasswordReset(this.state.user.email);
   };
 
+  onEditQuestion = (message, text) => {
+    this.props.firebase.message(message.uid).update({
+      ...message,
+      text,
+      editedAt: this.props.firebase.fieldValue.serverTimestamp(),
+    });
+  };
+
   render() {
     const { question, loading } = this.state;
 
@@ -47,32 +55,60 @@ class QuestionItem extends Component {
 
         {question && (
           <div>
-            <span>
-              <strong>ID: </strong> {question.uid}
-            </span>
-            <span>
-              <strong> Question: </strong> {question.questions}
-            </span>
-            <span>
-              <strong> Choices: </strong> {question.choices}
-            </span>
-            <span>
-              <strong> Answer: </strong> {question.correctAnswers}
-            </span>
-            <span>
-              <strong> Difficulty: </strong> {question.difficulty}
-            </span>
-            <span>
-              <strong> Image: </strong> {question.images}
-            </span>
-            <span>
-              <button
-                type="button"
-                onClick={this.onSendPasswordResetEmail}
-              >
-                Edit Question
-              </button>
-            </span>
+            <form>
+              <span>
+                <strong>ID: </strong> {question.uid}
+              </span>
+              <br />
+              <span>
+                <strong> Question: </strong>
+                <input
+                  type="text"
+                  value={question.questions}
+                  onChange={this.onChangeText}
+                />
+              </span>
+              <br />
+              <span>
+                <strong> Choices: </strong>
+                <input
+                  type="text"
+                  value={question.choices}
+                  onChange={this.onChangeText}
+                />
+              </span>
+              <br />
+              <span>
+                <strong> Answer: </strong>
+                <input
+                  type="text"
+                  value={question.correctAnswers}
+                  onChange={this.onChangeText}
+                />
+              </span>
+              <br />
+              <span>
+                <strong> Difficulty: </strong>
+                <input
+                  type="text"
+                  value={question.difficulty}
+                  onChange={this.onChangeText}
+                />
+              </span>
+              <br />
+              <span>
+                <strong> Image: </strong>
+                <input
+                  type="text"
+                  value={question.images}
+                  onChange={this.onChangeText}
+                />
+              </span>
+              <br />
+              <span>
+                <button type="submit">Edit Question</button>
+              </span>
+            </form>
           </div>
         )}
       </div>
