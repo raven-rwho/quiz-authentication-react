@@ -25,9 +25,9 @@ class Questions extends Component {
 
     this.unsubscribe = this.props.firebase
       .questions()
-      .orderBy('createdAt', 'desc')
       .onSnapshot(snapshot => {
-        if (snapshot.size) {
+          console.log("size: " + snapshot.size);
+          if (snapshot.size) {
           let questions = [];
           snapshot.forEach(doc =>
             questions.push({ ...doc.data(), uid: doc.id }),
