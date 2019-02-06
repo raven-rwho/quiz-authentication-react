@@ -32,3 +32,6 @@ yarn-error.log*
 
 # environment files
 .env
+
+# jetbrains
+.idea/
