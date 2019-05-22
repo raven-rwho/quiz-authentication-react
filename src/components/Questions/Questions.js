@@ -9,6 +9,10 @@ class Questions extends Component {
     super(props);
 
     this.state = {
+      choices: '',
+      correctAnswers: '',
+      difficulty: '',
+      images: '',
       text: '',
       loading: false,
       questions: [],
@@ -26,8 +30,7 @@ class Questions extends Component {
     this.unsubscribe = this.props.firebase
       .questions()
       .onSnapshot(snapshot => {
-          console.log("size: " + snapshot.size);
-          if (snapshot.size) {
+        if (snapshot.size) {
           let questions = [];
           snapshot.forEach(doc =>
             questions.push({ ...doc.data(), uid: doc.id }),
@@ -48,17 +51,27 @@ class Questions extends Component {
   }
 
   onChangeText = event => {
-    this.setState({ text: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   onCreateQuestion = (event, authUser) => {
     this.props.firebase.questions().add({
       text: this.state.text,
+      choices: this.state.choices,
+      correctAnswers: this.state.correctAnswers,
+      difficulty: this.state.difficulty,
+      images: this.state.images,
       userId: authUser.uid,
       createdAt: this.props.firebase.fieldValue.serverTimestamp(),
     });
 
-    this.setState({ text: '' });
+    this.setState({
+      text: '',
+      choices: '',
+      correctAnswers: '',
+      difficulty: '',
+      images: '',
+    });
 
     event.preventDefault();
   };
@@ -84,7 +97,15 @@ class Questions extends Component {
 
   render() {
     const { users } = this.props;
-    const { text, questions, loading } = this.state;
+    const {
+      choices,
+      correctAnswers,
+      difficulty,
+      images,
+      text,
+      questions,
+      loading,
+    } = this.state;
 
     return (
       <AuthUserContext.Consumer>
@@ -100,7 +121,7 @@ class Questions extends Component {
 
             {questions && (
               <QuestionList
-              questions={questions.map(question => ({
+                questions={questions.map(question => ({
                   ...question,
                   user: users
                     ? users[question.userId]
@@ -119,8 +140,38 @@ class Questions extends Component {
               }
             >
               <input
+                name="choices"
                 type="text"
+                placeholder="choices"
+                value={choices}
+                onChange={this.onChangeText}
+              />
+              <input
+                name="text"
+                type="text"
+                placeholder="text"
                 value={text}
+                onChange={this.onChangeText}
+              />
+              <input
+                name="difficulty"
+                type="number"
+                placeholder="difficulty"
+                value={difficulty}
+                onChange={this.onChangeText}
+              />
+              <input
+                name="images"
+                type="text"
+                placeholder="images"
+                value={images}
+                onChange={this.onChangeText}
+              />
+              <input
+                name="correctAnswers"
+                type="text"
+                placeholder="correctAnswers"
+                value={correctAnswers}
                 onChange={this.onChangeText}
               />
               <button type="submit">Send</button>

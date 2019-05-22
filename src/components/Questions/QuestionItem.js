@@ -42,9 +42,9 @@ class QuestionItem extends Component {
         ) : (
           <span>
             <strong>
-              {question.user.username || question.user.userId}
+              {question.choices}
             </strong>{' '}
-            {question.text} {question.editedAt && <span>(Edited)</span>}
+            {question.correctAnswers} {question.difficulty && <span>(Edited)</span>}
           </span>
         )}
 
