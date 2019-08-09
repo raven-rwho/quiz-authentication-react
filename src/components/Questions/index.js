@@ -1,4 +1,3 @@
-import QuestionItem from './QuestionItem';
-import QuestionList from './QuestionList';
+import Questions from './Questions';
 
-export { QuestionItem, QuestionList };
+export default Questions;
