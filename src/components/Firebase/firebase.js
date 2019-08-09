@@ -26,6 +26,7 @@ class Firebase {
     this.auth = app.auth();
     this.db = app.firestore();
     this.db.settings({ timestampsInSnapshots: true });
+    this.storage = app.storage();
 
     /* Social Sign In Method Provider */
 
@@ -111,6 +112,10 @@ class Firebase {
   question = uid => this.db.doc(`questions/${uid}`);
 
   questions = () => this.db.collection('questions');
+
+  // *** Question Storage API ***
+
+  image = () => this.storage.ref("images").child(filename).getDownloadURL();
 }
 
 export default Firebase;
